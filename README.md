@@ -84,9 +84,7 @@ Only events where A and B **disagree** contribute to the difference.
 The exact variance is:
 
 $$
-\mathrm{Var}(\Delta) =
-\frac{n_{10} + n_{01}}{N^2}
-- \frac{(n_{10} - n_{01})^2}{N^3}
+\mathrm{Var}(\Delta) = \frac{n_{10} + n_{01}}{N^2} - \frac{(n_{10} - n_{01})^2}{N^3}
 $$
 
 For large $N$, this simplifies to:
