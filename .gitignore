@@ -1,0 +1,24 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data / outputs
+*.log
+*.tmp
+*.csv
+*.png
+
+# Secrets
+.env
