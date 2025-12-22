@@ -47,6 +47,7 @@ $$\hat e_A = \frac{n_{11} + n_{10}}{N}, \quad
 $$
 
 The quantity of interest is the **difference in efficiencies**:
+
 $$
 \Delta = \hat e_A - \hat e_B
 $$
@@ -56,6 +57,7 @@ $$
 ## 3. Why the Naive Approach Fails
 
 If one treats $\hat e_A$ and $\hat e_B$ as independent binomial estimators, the variance of $\Delta$ is incorrectly written as:
+
 $$
 \mathrm{Var}(\Delta) = \mathrm{Var}(\hat e_A) + \mathrm{Var}(\hat e_B)
 $$
@@ -80,6 +82,7 @@ $$
 Only events where A and B **disagree** contribute to the difference.
 
 The exact variance is:
+
 $$
 \mathrm{Var}(\Delta) =
 \frac{n_{10} + n_{01}}{N^2}
@@ -87,6 +90,7 @@ $$
 $$
 
 For large $N$, this simplifies to:
+
 $$
 \sigma(\Delta) \approx \frac{\sqrt{n_{10} + n_{01}}}{N}
 $$
