@@ -148,9 +148,9 @@ The goals of this project are:
 This repository has completed the following:
 - Toy Monte Carlo studies comparing naive and correct uncertainties
 - Visualization of overlap vs uncertainty
+- Bayesian interpretation of the efficiency difference using a Dirichlet–multinomial model ([start_Bayes.ipynb](start_Bayes.ipynb))
 
 Possible future extensions include:
-- Bayesian interpretation of the efficiency difference using a Dirichlet–multinomial model
 - Application of the framework to business and finance case studies (e.g. A/B testing with shared populations)
 - Extension to weighted events and non-binary decisions
 
