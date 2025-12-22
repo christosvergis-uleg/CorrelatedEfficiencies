@@ -67,7 +67,7 @@ This ignores the fact that:
 - Fluctuations in A and B are correlated
 - Shared successes and failures cancel in the difference
 
-As a result, naive error estimates typically **overestimate** the uncertainty and misrepresent the actual significance of the comparison.
+As a result, naive error estimates can significantly misestimate the uncertainty, often underestimating it in correlated regimes.
 
 ---
 
@@ -81,7 +81,7 @@ $$
 
 Only events where A and B **disagree** contribute to the difference.
 
-The exact variance is:
+A finite-sample variance estimator is:
 
 $$
 \mathrm{Var}(\Delta) = \frac{n_{10} + n_{01}}{N^2} - \frac{(n_{10} - n_{01})^2}{N^3}
@@ -98,7 +98,7 @@ This result shows that:
 - The uncertainty is controlled entirely by the **rate of disagreement**
 - Two highly overlapping selections can be compared with high precision, even if their individual efficiencies are large
 
-This framework is mathematically equivalent to **McNemar’s test**, commonly used for paired binary outcomes.
+This framework is closely related to **McNemar’s test** for paired binary outcomes.
 
 ---
 
@@ -113,13 +113,15 @@ Key implications:
 - Small overlap → large uncertainty, even if headline efficiencies differ
 - Apparent improvements driven by shared events are correctly discounted
 
-This prevents over-interpreting changes that arise from statistical correlation rather than genuine differences in behavior.
+This prevents over-interpreting changes that arise from statistical correlation rather than genuine differences in behavior. 
+
+This work focuses on validating the uncertainty estimator required for hypothesis testing; applying a specific decision threshold or p-value is left to the user.
 
 ---
 
 ## 6. Broader Relevance
 
-Although motivated by efficiency comparisons in physics, this framework applies directly to:
+Although motivated by efficiency comparisons in physics, such as trigger efficiencies, this framework applies directly to:
 
 - Model replacement and A/B testing
 - Risk and credit decision systems
@@ -143,9 +145,11 @@ The goals of this project are:
 
 ## 8. Next Steps
 
-Planned extensions include:
+This repository has completed the following:
 - Toy Monte Carlo studies comparing naive and correct uncertainties
 - Visualization of overlap vs uncertainty
+
+Possible future extensions include:
 - Translation of the framework to business and finance case studies
 - Extension to weighted events and non-binary decisions
 
@@ -156,4 +160,4 @@ Planned extensions include:
 Comparing efficiencies without accounting for correlation is statistically incorrect and practically misleading.  
 By focusing on disagreement rates rather than headline proportions, this framework provides a robust and interpretable method to assess true differences between competing approaches.
 
-It is less glamorous than naive error bars, but also less wrong.
+It is less glamorous than naive error bars, but statistically correct.
