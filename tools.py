@@ -89,11 +89,11 @@ def run_toys(Nevents, Ntoys, probabilities, rng):
 
     Returns
     -------
-    deltas : array
-    sigma_corrs : array
-    sigma_naives : array
-    eff_A : array
-    eff_B : array
+    :deltas : array
+    :sigma_corrs : array
+    :sigma_naives : array
+    :eff_A : array
+    :eff_B : array
     """
 
     counts = rng.multinomial(Nevents, probabilities, size=Ntoys) 
@@ -111,3 +111,36 @@ def run_toys(Nevents, Ntoys, probabilities, rng):
     )
 
     return deltas, sigma_corrs, sigma_naives, eff_A, eff_B
+
+
+def bayes_delta_posterior(N, p_true, rng, alpha_prior=None, Npost=200_000):
+    """
+    Simulate multinomial counts for N events and compute posterior samples of Δ = p10 - p01.
+
+    Parameters
+    ----------
+    :N : Number of data events.
+    :p_true : True probabilities [p11, p10, p01, p00].
+    :rng : np.random.Generator
+    :alpha_prior : optional. Dirichlet prior parameters. Default is uniform Dirichlet(1,1,1,1).
+    :Npost : Number of posterior samples.
+
+    Returns
+    -------
+    :Delta_samples : (Npost,) array
+    :info : dict with counts and posterior parameters
+    """
+    if alpha_prior is None:
+        alpha_prior = np.ones(4)
+
+    # generate "observed" data
+    n = rng.multinomial(N, p_true)
+
+    # Posterior and posterior sampling
+    alpha_post = alpha_prior + n
+    p_post = rng.dirichlet(alpha_post, size=Npost)
+    Delta_samples = p_post[:, 1] - p_post[:, 2]  # p10 - p01
+
+    info = {"n": n, "alpha_post": alpha_post}
+    return Delta_samples, info
+

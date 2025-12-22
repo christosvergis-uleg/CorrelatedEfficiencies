@@ -150,7 +150,8 @@ This repository has completed the following:
 - Visualization of overlap vs uncertainty
 
 Possible future extensions include:
-- Translation of the framework to business and finance case studies
+- Bayesian interpretation of the efficiency difference using a Dirichlet–multinomial model
+- Application of the framework to business and finance case studies (e.g. A/B testing with shared populations)
 - Extension to weighted events and non-binary decisions
 
 ---
