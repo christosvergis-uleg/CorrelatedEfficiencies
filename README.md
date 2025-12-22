@@ -10,9 +10,9 @@ Examples include:
 
 A common but incorrect approach is to treat the efficiencies of A and B as **independent binomial proportions**, assigning uncertainties of the form:
 
-\[
+$$
 \sigma(p) = \sqrt{\frac{p(1-p)}{N}}
-\]
+$$
 
 This assumption fails whenever the two selections are **not mutually exclusive**, which is almost always the case in practice. Since A and B act on the same events, their efficiencies are statistically **correlated**.
 
@@ -25,42 +25,40 @@ This project develops a statistically correct framework to:
 
 ## 2. Problem Definition
 
-Consider a dataset of \(N\) events.  
+Consider a dataset of $N$ events.  
 Each event can either pass or fail selection A, and independently pass or fail selection B.
 
 Define the following counts:
 
 | Outcome | Description |
 |------|------------|
-| \(n_{11}\) | Event passes both A and B |
-| \(n_{10}\) | Event passes A only |
-| \(n_{01}\) | Event passes B only |
-| \(n_{00}\) | Event passes neither |
+| $n_{11}$ | Event passes both A and B |
+| $n_{10}$ | Event passes A only |
+| $n_{01}$ | Event passes B only |
+| $n_{00}$ | Event passes neither |
 
 By construction:
-\[
-N = n_{11} + n_{10} + n_{01} + n_{00}
-\]
+$$N = n_{11} + n_{10} + n_{01} + n_{00}$$
 
 The efficiencies are:
-\[
-\hat e_A = \frac{n_{11} + n_{10}}{N}, \quad
+
+$$\hat e_A = \frac{n_{11} + n_{10}}{N}, \quad
 \hat e_B = \frac{n_{11} + n_{01}}{N}
-\]
+$$
 
 The quantity of interest is the **difference in efficiencies**:
-\[
+$$
 \Delta = \hat e_A - \hat e_B
-\]
+$$
 
 ---
 
 ## 3. Why the Naive Approach Fails
 
-If one treats \(\hat e_A\) and \(\hat e_B\) as independent binomial estimators, the variance of \(\Delta\) is incorrectly written as:
-\[
+If one treats $\hat e_A$ and $\hat e_B$ as independent binomial estimators, the variance of $\Delta$ is incorrectly written as:
+$$
 \mathrm{Var}(\Delta) = \mathrm{Var}(\hat e_A) + \mathrm{Var}(\hat e_B)
-\]
+$$
 
 This ignores the fact that:
 - The same events contribute to both efficiencies
@@ -75,23 +73,23 @@ As a result, naive error estimates typically **overestimate** the uncertainty an
 
 The efficiency difference can be rewritten using the disagreement counts:
 
-\[
+$$
 \Delta = \frac{n_{10} - n_{01}}{N}
-\]
+$$
 
 Only events where A and B **disagree** contribute to the difference.
 
 The exact variance is:
-\[
+$$
 \mathrm{Var}(\Delta) =
 \frac{n_{10} + n_{01}}{N^2}
 - \frac{(n_{10} - n_{01})^2}{N^3}
-\]
+$$
 
-For large \(N\), this simplifies to:
-\[
+For large $N$, this simplifies to:
+$$
 \sigma(\Delta) \approx \frac{\sqrt{n_{10} + n_{01}}}{N}
-\]
+$$
 
 This result shows that:
 - Events where A and B agree do **not** contribute to the uncertainty
