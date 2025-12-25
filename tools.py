@@ -112,8 +112,7 @@ def run_toys(Nevents, Ntoys, probabilities, rng):
 
     return deltas, sigma_corrs, sigma_naives, eff_A, eff_B
 
-
-def bayes_delta_posterior(N, p_true, rng, alpha_prior=None, Npost=200_000):
+def bayes_delta_posterior(N, p_true, rng, alpha_prior=None, Npost=200000):
     """
     Simulate multinomial counts for N events and compute posterior samples of Δ = p10 - p01.
 
@@ -144,3 +143,66 @@ def bayes_delta_posterior(N, p_true, rng, alpha_prior=None, Npost=200_000):
     info = {"n": n, "alpha_post": alpha_post}
     return Delta_samples, info
 
+def frequentist_weighted_mean_error(arr=np.array([])):
+    """
+    Frequentist estimator for weighted efficiency difference Delta = eff[A] - eff[B].
+
+    Parameters
+    ----------
+    :arr : array of the form (A, B, w_i) where A, B are 0/1 indicators and w_i are weights.
+    A, B are expected to be integers (0 or 1).
+
+    Returns
+    -------
+    :deltas : The mean of the weighted efficiency differences (A - B).
+    :sigma_w : The standard error of the weighted differences.
+    """
+    A       = arr[:,0].astype(int)
+    B       = arr[:,1].astype(int)
+    Weights = arr[:,2].astype(float)
+    
+    Ntotal = np.sum(Weights)
+    x      = Weights*(A - B)
+
+    delta_w = np.sum(x) / Ntotal 
+    sigma_w = np.sqrt( np.sum(x*x) )  / Ntotal
+
+    return delta_w, sigma_w
+
+def bayesian_weighted_mean_error(arr=np.array([]), Npost=200000, seed=1234987163231):
+    """
+    Bayesian estimator for weighted efficiency difference Delta = eff[A] - eff[B].
+    Uses bootstrapping with Dirichlet resampling of weights.
+
+    Parameters
+    ----------
+    :arr : array of the form (A, B, w_i) where A, B are 0/1 indicators and w_i are weights.
+    :Npost : Number of posterior samples.
+    :seed : np.random.Generator seed
+
+    Returns
+    -------
+    :Delta_samples : (Npost,) array of posterior samples of Delta.
+    """
+    
+    rng = np.random.default_rng(seed)
+    
+
+    A       = arr[:,0].astype(int)
+    B       = arr[:,1].astype(int)
+    Weights = arr[:,2].astype(float)
+
+    # weighted counts
+    x = Weights * ( A - B) 
+    Ntotal = np.sum(Weights) 
+
+    n = len(Weights)
+    alpha_prior = np.ones(n)
+    #delta_w_samples = np.empty(Npost)
+
+    #for each event, draw a weight from Dirichlet
+    p_i     = rng.dirichlet(alpha_prior, size=Npost)
+    # then for each posterior sample, calculate weighted mean
+    delta_w_samples =  ( p_i @ x ) / ( p_i @ Weights )
+
+    return delta_w_samples
